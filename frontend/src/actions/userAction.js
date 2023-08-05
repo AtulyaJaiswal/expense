@@ -13,6 +13,7 @@ import {
   UPDATE_DATA_REQUEST,
   UPDATE_DATA_SUCCESS,
   UPDATE_DATA_FAIL,
+  CLEAR_ERRORS,
 } from "../constants/userConstant";
 
 import axios from "axios";
@@ -87,17 +88,23 @@ export const settingData = (fileName, data) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(
+    const submit = await axios.put(
       `/api/addNewData`,
       { fileName, data },
       config
     );
 
-    dispatch({ type: UPDATE_DATA_SUCCESS, payload: data.message });
+    dispatch({ type: UPDATE_DATA_SUCCESS, payload: submit.data.message });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: UPDATE_DATA_FAIL,
       payload: error.response.data.message,
     });
   }
+};
+
+// CLEARING MESSAGES
+export const clearMessages = () => async (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };

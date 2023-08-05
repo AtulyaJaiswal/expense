@@ -12,11 +12,11 @@ const Home = () => {
 
   const { loading, user } = useSelector((state) => state.registerLoginUser);
 
-  const {
-    loading: updateLoading,
-    message,
-    error,
-  } = useSelector((state) => state.updateData);
+  // const {
+  //   loading: updateLoading,
+  //   message,
+  //   error,
+  // } = useSelector((state) => state.updateData);
 
   const [newFileName, setNewFileName] = useState("");
 
@@ -29,18 +29,9 @@ const Home = () => {
     dispatch(settingData(newFileName, []));
   };
 
-  useEffect(() => {
-    if (message) {
-      toast.success(message);
-    }
-    if (error) {
-      toast.error(error);
-    }
-  }, [message, error]);
-
   return (
     <Fragment>
-      {loading || updateLoading ? (
+      {loading ? (
         <Loader />
       ) : (
         <Fragment>

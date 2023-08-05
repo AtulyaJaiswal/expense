@@ -10,10 +10,10 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
-  CLEAR_MESSAGES,
   UPDATE_DATA_REQUEST,
   UPDATE_DATA_SUCCESS,
   UPDATE_DATA_FAIL,
+  CLEAR_ERRORS,
 } from "../constants/userConstant";
 
 export const registerLoginUserReducer = (state = { user: {} }, action) => {
@@ -58,7 +58,7 @@ export const registerLoginUserReducer = (state = { user: {} }, action) => {
         loading: false,
         error: action.payload,
       };
-    case CLEAR_MESSAGES:
+    case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
@@ -76,7 +76,6 @@ export const updateDataReducer = (state = {}, action) => {
       };
     case UPDATE_DATA_SUCCESS:
       return {
-        ...state,
         loading: false,
         message: action.payload,
       };
@@ -84,7 +83,17 @@ export const updateDataReducer = (state = {}, action) => {
       return {
         ...state,
         loading: false,
+        message: null,
         error: action.payload,
       };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        message: null,
+        error: null,
+      };
+
+    default:
+      return state;
   }
 };

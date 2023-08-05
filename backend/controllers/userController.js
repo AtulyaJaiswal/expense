@@ -51,25 +51,24 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
 
 //ADD DATA
 exports.addNewData = catchAsyncErrors(async (req, res, next) => {
-  const { data } = req.body;
+  const { fileName, data } = req.body;
 
-  // const user = await User.findOne()
   const isDetailPresent = req.user.expenseData.find(
-    (detail) => detail.fileName.toString() === data.fileName.toString()
+    (detail) => detail.fileName.toString() === fileName.toString()
   );
 
   if (isDetailPresent) {
     for (const detail of req.user.expenseData) {
-      if (detail.fileName.toString() === data.fileName.toString()) {
-        await User.updateOne(
+      if (detail.fileName.toString() === fileName.toString()) {
+        const result = await User.updateOne(
           {
             _id: req.user._id,
-            "expenseData.fileName": detail.fileName,
+            "expenseData.fileName": fileName,
           },
           {
             $set: {
-              "expenseData.$.fileName": data.fileName,
-              "expenseData.$.data": data.data,
+              "expenseData.$.fileName": fileName,
+              "expenseData.$.data": data,
             },
           }
         );
@@ -77,8 +76,8 @@ exports.addNewData = catchAsyncErrors(async (req, res, next) => {
     }
   } else {
     req.user.expenseData.push({
-      fileName: data.fileName,
-      data: data.data,
+      fileName: fileName,
+      data: data,
     });
     await req.user.save({ validateBeforeSave: false });
   }

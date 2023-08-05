@@ -81,7 +81,7 @@ const Register = () => {
                   />
                 </div>
                 <div>
-                  <button onClick={loginUser}>Register</button>
+                  <button onClick={loginUser}>Login</button>
                 </div>
               </div>
             </div>

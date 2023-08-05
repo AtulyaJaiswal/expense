@@ -3,7 +3,7 @@ import "./Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import Loader from "../Loader/Loader";
-import { settingData } from "../../actions/userAction";
+import { logout, settingData } from "../../actions/userAction";
 import { toast } from "react-toastify";
 
 const Home = () => {
@@ -29,6 +29,11 @@ const Home = () => {
     dispatch(settingData(newFileName, []));
   };
 
+  const logoutUser = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -39,6 +44,7 @@ const Home = () => {
             <h2>Home</h2>
             <p>{user && user.name}</p>
             <p>{user && user.email}</p>
+            <button onClick={logoutUser}>Logout</button>
 
             <div>
               <input
